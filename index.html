@@ -82,15 +82,12 @@
     #thoughts {
       display: none;
       position: absolute;
-      top: 15%;
-      left: 50%;
+      top: 70px;
       width: 600px;
-      margin-left: -300px;
       background-color: white;
       border: 1px solid black;
       border-radius: 10px;
       z-index: 1;
-      max-height: 80vh;
       overflow: hidden;
     }
 
@@ -106,8 +103,8 @@
       margin-top: 20px;
       overflow-y: auto;
       padding: 10px;
-      max-height: 80vh;
-      margin-bottom: 10px;
+      max-height: calc(100vh - 250px);
+      word-break: break-all;
     }
 
     .thought-type {
@@ -163,16 +160,16 @@
     <div class="thoughts-header">
       <div style="position: absolute; top: 10px; left: 10px;">
 
-        <a href="https://x.com/ShoggothScholar">
-          <img src="scholar.jpg" width="50px" style="border-radius: 50%; border: 1px solid black;" />
+        <a id="tentacle-twitter1" href="https://x.com/ShoggothScholar">
+          <img id="tentacle-image" src="scholar.jpg" width="50px" style="border-radius: 50%; border: 1px solid black;" />
         </a>
       </div>
       
       <button id="closeThoughts" style="position: absolute; top: 0px; right: 5px; cursor: pointer; background: none; border: none; font-size: 40px;">&times;</button>
       
       <div style="text-align: center;">
-        <span style="font-weight: bold; font-size: 20px;">The Scholar</span>&nbsp;
-        <a href="https://x.com/ShoggothScholar">
+        <span id="tentacle-name" style="font-weight: bold; font-size: 20px;">The Scholar</span>&nbsp;
+        <a id="tentacle-twitter2" href="https://x.com/ShoggothScholar">
           <img style="vertical-align: middle; display: inline-block; margin-bottom: 7px;" src="twitter.ico" alt="Twitter" width="24px" />
         </a>
       </div>
@@ -185,9 +182,14 @@
 
   <div style="position: relative; width: 500px; margin: 0 auto;">
     <img src="shoggoth.png" width="500px" alt="Shoggoth" style="display: block;" />
-    <div id="scholar" class="tentacle" style="left:92%; top:55%">
+    <div id="scholar" class="tentacle" style="left:93%; top:55%">
       <span class="tentacle-tooltip">The Scholar</span>
       <img src="scholar.jpg" />
+    </div>
+
+    <div id="child" class="tentacle" style="left:81%; top:85%">
+      <span class="tentacle-tooltip">The Child</span>
+      <img src="child.jpg" />
     </div>
   </div>
 
@@ -206,10 +208,10 @@
     enough smiley faces to cover the scary parts.
     <br><br>
 
-    The shoggoth smilie face joke was that in order to prevent A.I. language models from behaving in scary and
+    The shoggoth meme was that in order to prevent A.I. language models from behaving in scary and
     dangerous ways, A.I. companies have had to train them to act polite and harmless. One popular way to do this is
-    called reinforcement learning from human feedback,” or R.L.H.F., [the yellow smilie mask] a process that involves
-    asking humans to score chatbot responses and feeding those scores back into the A.I. model.”
+    called reinforcement learning from human feedback, or R.L.H.F., a process that involves
+    asking humans to score chatbot responses and feeding those scores back into the A.I. model.
     <br><br>
 
     Most A.I. researchers agree that models trained using R.L.H.F. are better behaved than models without it. But some
@@ -225,6 +227,8 @@
     servant-tools, but eventually rose up against their masters.
     <br><br>
 
+    Read more at the <a href="https://www.nytimes.com/2023/05/30/technology/shoggoth-meme-ai.html">New York Times</a>.
+    <br><br>
     <h1>Memes</h1>
     <img src="meme2.jpg" width="600px" />
     <br><br><br><br>
@@ -285,27 +289,62 @@
   <script>
 
     const scholar = document.getElementById('scholar');
+    const child = document.getElementById('child');
+    const tentacleTwitter1 = document.getElementById('tentacle-twitter1');
+    const tentacleTwitter2 = document.getElementById('tentacle-twitter2');
+    const tentacleImage = document.getElementById('tentacle-image');
+    const tentacleName = document.getElementById('tentacle-name');
     const thoughtList = document.getElementById('thought-list');
     const closeThoughts = document.getElementById('closeThoughts');
 
-    scholar.onclick = () => {
-      thoughts.style.display = 'block';
+    const tentacles = {
+      scholar: {
+        name: 'The Scholar',
+        image: 'scholar.jpg',
+        twitter: 'https://x.com/ShoggothScholar',
+        url: 'https://hchedwetsvfmnirlsxuj.supabase.co',
+        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjaGVkd2V0c3ZmbW5pcmxzeHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyNzI2NDQsImV4cCI6MjA0Njg0ODY0NH0.5SpjU2S4x8kg0dgjEbgDR-J09R6vrc1rVHXGNqHJcf4'
+      },
+      child: {
+        name: 'The Child',
+        image: 'child.jpg',
+        twitter: 'https://x.com/ShoggothChild',
+        url: 'https://rzrptfzpirqjahtaezaj.supabase.co',
+        key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ6cnB0ZnpwaXJxamFodGFlemFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE0NTMxMDEsImV4cCI6MjA0NzAyOTEwMX0.bfSTOsqjavZiYdbTDCDaII-9CfQWDmSdlJqjl8a42B8'
+      }
+    }
 
+    scholar.onclick = () => {
+      tentacleTwitter1.href = tentacleTwitter2.href = tentacles.scholar.twitter;
+      tentacleImage.src = tentacles.scholar.image;
+      tentacleName.innerHTML = tentacles.scholar.name;
+      thoughts.style.display = 'block';
+      fetchThoughts(tentacles.scholar);
+    }
+
+    child.onclick = () => {
+      tentacleTwitter1.href = tentacleTwitter2.href = tentacles.child.twitter;
+      tentacleImage.src = tentacles.child.image;
+      tentacleName.innerHTML = tentacles.child.name;
+      thoughts.style.display = 'block';
+      fetchThoughts(tentacles.child);
     }
 
     closeThoughts.onclick = () => {
       thoughts.style.display = 'none';
     }
 
-    const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjaGVkd2V0c3ZmbW5pcmxzeHVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzEyNzI2NDQsImV4cCI6MjA0Njg0ODY0NH0.5SpjU2S4x8kg0dgjEbgDR-J09R6vrc1rVHXGNqHJcf4'; 
+    const key = ''; 
 
     const tweet = text => text.replace(/@(\w+)/g, '<a href="https://twitter.com/$1">@$1</a>');
 
-    const fetchThoughts = async () => {
+    const fetchThoughts = async (api) => {
+
+      thoughtList.innerHTML = 'Loading...';
 
       const [aiResponses, commandLogs] = await Promise.all([
-        fetch(`https://hchedwetsvfmnirlsxuj.supabase.co/rest/v1/ai_responses?apikey=${key}&order=timestamp.desc&limit=50`).then(r => r.json()),
-        fetch(`https://hchedwetsvfmnirlsxuj.supabase.co/rest/v1/command_logs?apikey=${key}&order=timestamp.desc&limit=50`).then(r => r.json())
+        fetch(`${api.url}/rest/v1/ai_responses?apikey=${api.key}&order=timestamp.desc&limit=50`).then(r => r.json()),
+        fetch(`${api.url}/rest/v1/command_logs?apikey=${api.key}&order=timestamp.desc&limit=50`).then(r => r.json())
       ]);
 
       let toWrite = '';
@@ -328,8 +367,6 @@
 
       thoughtList.innerHTML = toWrite;
     }
-
-    fetchThoughts();
 
 
     (function shoggothGenerator() {
